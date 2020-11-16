@@ -31,6 +31,8 @@
     [self triggerVibrateRCCall];
     NSLog(@"NotificationService didReceiveNotificationRequest");
     
+    // <要点>
+    // 否则无法实现30秒
     usleep(30000000);
 }
 
