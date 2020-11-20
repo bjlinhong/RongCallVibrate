@@ -40,7 +40,11 @@
     // 注册设备成功后, 从此处获取 token
     // 如果需要获取32位的token, 直接在此处打断点, 查看 deviceToken 的内容,
     // 请勿将 deviceToken 转换为 NSString, 这是错误的做法
-    NSLog(@"DeviceToken: %@", deviceToken); //注册成功后返回的Token
+    NSString *tokenSt = [[[[deviceToken description]
+                           stringByReplacingOccurrencesOfString:@"<" withString:@""]
+                          stringByReplacingOccurrencesOfString:@">" withString:@""]
+                         stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"DeviceToken: %@", tokenSt); //注册成功后返回的Token
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
@@ -62,7 +66,9 @@
     
     NSLog(@"willPresentNotification");
     // <要点>
-    completionHandler(UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
+    completionHandler(UNNotificationPresentationOptionBadge|
+                      UNNotificationPresentationOptionSound|
+                      UNNotificationPresentationOptionAlert);
 }
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center
